@@ -27,21 +27,17 @@ In your solution, focus on correctness. The performance of your solution will no
     function solution($setA,$setB) {
         $string = '';
 
-        if($setA>=$setB) {
-            $a=$setA;
-            $b=$setB;
-        }
-        else {
-            $a=$setB;
-            $b=$setA;
-        }
+        if($setA>=$setB) { $a=$setA;$b=$setB; } else { $a=$setB;$b=$setA; }
 
         if ($a>=$b && $a<=2*($b+1) || ($b==0 && $a<3)) {
             while ($b>0) {
-                if ($b==1 && $a==4) {
-                    $string = $string . 'aabaa';
-                    break;
-                }
+
+                if ($b==1 && $a==4) { $string = $string . 'aabaa'; break; }
+                if ($b==1 && $a==3) { $string = $string . 'aaba'; break;}
+                if ($b==1 && $a==2) { $string = $string . 'aab'; break;}
+                if ($b==1 && $a==1) { $string = $string . 'ab'; break;}
+                if ($b==1 && $a==0) { $string = $string . 'b'; break;}
+
                 if (($a/2==$b) || ($a>$b)) {
                     $string = $string . 'aab';
                     $a=$a-2;
@@ -65,3 +61,64 @@ In your solution, focus on correctness. The performance of your solution will no
     echo solution($setA,$setB);
     echo '<hr>';
 ?>
+ <!-- SEMI -->
+
+ <?php
+
+// declare(strict_types=1);
+
+
+function renderAB(int $a, int $b): string
+{
+	$string = $string ?? '';
+	
+		if ($b === 0 && $a === 0){
+		
+			return $string;
+		
+		} else {
+		
+			if ($a > $b) {
+		
+				for ($i = 2; $i > 0; $i--) {
+			
+					if ($a > 0){
+						$string .= 'a';
+						$a--;
+					}
+				}
+				for ($i = 2; $i > 0; $i--) {
+			
+					if ($b > 0){
+						$string .= 'b';
+						$b--;
+					}
+				}
+			} else {
+				
+				for ($i = 2; $i > 0; $i--) {
+			
+					if ($b > 0){
+						$string .= 'b';
+						$b--;
+					}
+				}
+				for ($i = 2; $i > 0; $i--) {
+			
+					if ($a >0){
+						$string .= 'a';
+						$a--;
+					}
+				}
+				
+			}
+			
+			$string .= renderAB($a, $b);
+		}
+		
+
+	
+	return $string;
+}
+
+echo renderAB($setA, $setB);
